@@ -1,7 +1,60 @@
-DO-J II - Mail Demo between Banjul, Gambia and Ilha Fernando de Noronha, Brasilia for Flightgear
+DO-J II - Mail Demo between Banjul, Gambia and Ilha Fernando de Noronha, Brasilia for Flightgear.
 
 by Marc Kraus
 Lake of Constance Hangar
 http://www.marc-kraus.de/fg/
 
 Copyright (C) 2012 - 2016  Marc Kraus
+
+
+This package include an "AI"-folder and a "Models"-folder.
+
++ Add the content of the AI - folder in the AI - folder of your fgdata package.
++ Add the content of the Models - folder in the Models - folder of your fgdata package.
+
+
+######################################################################
+Next Airport to the carrier Schwabenland is Banjul, Gambia (GPYD)
+
+--ai-scenario=DO_J_1934_Mail_demo
+--carrier=Schwabenland
+--parkpos=cat
+or 
+--parkpos=wait
+--parkpos=canvas
+--parkpos=sea1
+--parkpos=sea2
+--parkpos=sea3
+--parkpos=sea4
+
+######################################################################
+The Airport for the carrier Westfalen is Fernando de Noronha (SBFN)
+
+--ai-scenario=DO_J_1934_Mail_demo
+--carrier=Westfalen
+--parkpos=cat
+or 
+--parkpos=wait
+--parkpos=canvas
+--parkpos=sea1
+--parkpos=sea2
+--parkpos=sea3
+--parkpos=sea4
+
+#######################################################################
+
+After successfull flightgear start on the catapult of the Westfalen or Schwabenland,
+push shift-L to engage the cat. And shift+c to throw out :)
+
+Back on the canvas behind the ships, click on the sailer in the steerage.
+And now turn the crane very carefully. 
+Back on the rail, steer your DO-J-II with mouse or joystick back to the catapult.
+
+To take charge click on the mailbags :)
+
+Enjoy it!
+
+
+
+
+
