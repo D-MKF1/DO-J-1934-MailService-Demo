@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<!--
+###############################################################################
+##
+##   DO-J-1934-Mail demo for FlightGear 2.8
+##   by Marc Kraus :: Lake of Constance Hangar
+##
+##   Copyright (C) 2012 - 2014  Marc Kraus  (info(at)marc-kraus.de)
+##
+###############################################################################
+-->
+<PropertyList>
+	<path>towelWest.ac</path>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>towel</object-name>
+		<object-name>ring</object-name>		
+    <object-name>towel.001</object-name>
+		<property>surface-positions/crane-stand</property>
+    <interpolation>
+      <entry><ind>-1   </ind><dep> -15 </dep></entry>
+      <entry><ind> 0   </ind><dep>   4 </dep></entry>
+      <entry><ind> 1   </ind><dep>  45 </dep></entry>
+    </interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+  <animation>
+    <type>select</type>
+    <object-name>towel.001</object-name>
+    <condition>
+		    <property>surface-positions/crane-hook-locked</property>
+    </condition>
+  </animation>
+
+  <!-- this is comming from the DO-J -->
+	<animation>
+      <type>rotate</type>
+		  <object-name>towel</object-name>
+		  <object-name>ring</object-name>		
+      <object-name>towel.001</object-name>
+      <property>/orientation/pitch-deg</property>
+      <factor>0.5</factor>
+      <axis>
+        <x>0</x>
+        <y>1</y>
+        <z>0</z>
+      </axis>
+ 	</animation>
+
+	<animation>
+      <type>rotate</type>
+		  <object-name>towel</object-name>
+		  <object-name>ring</object-name>		
+      <object-name>towel.001</object-name>
+      <property>/orientation/roll-deg</property>
+      <factor>1</factor>
+      <axis>
+        <x>-1</x>
+        <y>0</y>
+        <z>0</z>
+      </axis>
+ 	</animation>
+
+  <animation>
+    <type>pick</type>
+	  <object-name>ring</object-name>		
+    <object-name>towel.001</object-name>	
+    <action>
+      <button>0</button>
+      <repeatable>false</repeatable>
+      <binding>
+        <command>property-assign</command>
+        <property>/controls/special/catapult-carrier-crane/search-carrier</property>
+        <value>0</value>
+      </binding>
+      <binding>
+        <command>nasal</command>
+        <script>
+          setprop("/sim/crashed",0);
+        </script>
+      </binding>
+    </action>
+  </animation>
+
+</PropertyList>

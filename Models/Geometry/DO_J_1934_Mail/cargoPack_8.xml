@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<!--
+###############################################################################
+##
+##   DO-J-1934-Mail demo for FlightGear 2.8
+##   by Marc Kraus :: Lake of Constance Hangar
+##
+##   Copyright (C) 2012 - 2014  Marc Kraus  (info(at)marc-kraus.de)
+##
+###############################################################################
+-->
+<PropertyList>
+	<path>cargo.ac</path>
+
+	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>canvas</object-name>
+	</effect>
+
+	<animation>
+		<object-name>cargo.001</object-name>
+		<object-name>cargo.002</object-name>
+		<object-name>cargo.003</object-name>
+		<object-name>canvas</object-name>
+	</animation>
+
+  <animation>
+    <type>select</type>
+		<object-name>canvas</object-name>
+    <condition>
+      <greater-than>
+        <property>controls/cargo</property>
+        <value>24.0</value>
+      </greater-than>
+    </condition>
+  </animation>
+
+  <animation>
+    <type>select</type>
+		<object-name>cargo.001</object-name>
+    <condition>
+      <greater-than>
+        <property>controls/cargo</property>
+        <value>23.0</value>
+      </greater-than>
+    </condition>
+  </animation>
+
+  <animation>
+    <type>select</type>
+		<object-name>cargo.002</object-name>
+    <condition>
+      <greater-than>
+        <property>controls/cargo</property>
+        <value>22.0</value>
+      </greater-than>
+    </condition>
+  </animation>
+
+  <animation>
+    <type>select</type>
+		<object-name>cargo.003</object-name>
+    <condition>
+      <greater-than>
+        <property>controls/cargo</property>
+        <value>21.0</value>
+      </greater-than>
+    </condition>
+  </animation>
+
+  <animation>
+    <type>pick</type>
+	  <object-name>cargo.001</object-name>	
+    <action>
+      <button>0</button>
+      <repeatable>false</repeatable>
+      <binding>
+        <condition>
+          <and>
+            <greater-than>
+	            <property>controls/cargo</property>
+              <value>23.0</value>
+            </greater-than>
+            <less-than>
+	            <property>controls/cargo</property>
+              <value>25.0</value>
+            </less-than>
+          </and>
+        </condition>
+        <command>property-toggle</command>
+        <property>/controls/special/catapult-carrier-crane/cargo-schwabenland-toggle</property>
+      </binding>
+    </action>
+  </animation>
+
+  <animation>
+    <type>pick</type>
+	  <object-name>cargo.002</object-name>	
+    <action>
+      <button>0</button>
+      <repeatable>false</repeatable>
+      <binding>
+        <condition>
+          <and>
+            <greater-than>
+	            <property>controls/cargo</property>
+              <value>22.0</value>
+            </greater-than>
+            <less-than>
+	            <property>controls/cargo</property>
+              <value>25.0</value>
+            </less-than>
+          </and>
+        </condition>
+        <command>property-toggle</command>
+        <property>/controls/special/catapult-carrier-crane/cargo-schwabenland-toggle</property>
+      </binding>
+    </action>
+  </animation>
+
+  <animation>
+    <type>pick</type>
+	  <object-name>cargo.003</object-name>	
+    <action>
+      <button>0</button>
+      <repeatable>false</repeatable>
+      <binding>
+        <condition>
+          <and>
+            <greater-than>
+	            <property>controls/cargo</property>
+              <value>21.0</value>
+            </greater-than>
+            <less-than>
+	            <property>controls/cargo</property>
+              <value>25.0</value>
+            </less-than>
+          </and>
+        </condition>
+        <command>property-toggle</command>
+        <property>/controls/special/catapult-carrier-crane/cargo-schwabenland-toggle</property>
+      </binding>
+    </action>
+  </animation>
+
+</PropertyList>

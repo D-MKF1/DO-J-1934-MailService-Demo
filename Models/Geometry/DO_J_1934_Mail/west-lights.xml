@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+###############################################################################
+##
+##   DO-J-1934-Mail demo for FlightGear 2.8
+##   by Marc Kraus :: Lake of Constance Hangar
+##
+##   Copyright (C) 2012 - 2014  Marc Kraus  (info(at)marc-kraus.de)
+##
+###############################################################################
+-->
+<PropertyList>
+
+	<path>west-lights.ac</path>
+
+	<animation>
+		<type>select</type>
+		<object-name>lightIllum1</object-name>
+		<object-name>lightIllum2</object-name>
+		<object-name>lightIllum3</object-name>
+    <object-name>lightBackRed</object-name>
+    <object-name>lightFrontRed</object-name>
+		<object-name>windows</object-name>
+    <condition>
+      <greater-than>
+        <property>/sim/time/sun-angle-rad</property>
+        <value>1.5</value>
+      </greater-than>
+    </condition>
+	</animation>
+
+  <animation>
+    <type>material</type>
+		<object-name>windows</object-name>
+    <emission>
+      <red>0.6</red>
+      <green>0.6</green>
+      <blue>0.1</blue>
+      <property>/sim/time/sun-angle-rad</property>
+      <factor>1</factor>
+    </emission>
+  </animation>
+
+	<animation>
+		<type>material</type>
+		<object-name>lightIllum1</object-name>
+		<object-name>lightIllum2</object-name>
+		<object-name>lightIllum3</object-name>
+		<emission>
+			<red>0.95</red>
+			<green>0.95</green>
+			<blue>0.95</blue>
+		</emission>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>light1Ball</object-name>
+		<object-name>light1Volume</object-name>
+		<object-name>light2Ball</object-name>
+		<object-name>light2Volume</object-name>
+		<object-name>light3Ball</object-name>
+		<object-name>light3Volume</object-name>
+		<object-name>light4Ball</object-name>
+		<object-name>light4Volume</object-name>
+    <condition>
+      <and>
+			  <property>/sim/rendering/rembrandt/enabled</property>
+        <greater-than>
+          <property>/sim/time/sun-angle-rad</property>
+          <value>1.5</value>
+        </greater-than>
+      </and>
+    </condition>
+	</animation>
+
+	<!-- red lights -->
+	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>lightBackRed</object-name>
+    <object-name>lightFrontRed</object-name>
+	</effect>
+
+	<animation>
+		<type>translate</type>
+		<object-name>lightBackRed</object-name>
+		<offset-m>25</offset-m>
+		<axis><x>2.233</x><y>0.0</y><z>24.364</z></axis>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>lightFrontRed</object-name>
+		<offset-m>52.92</offset-m>
+		<axis><x>-44.048</x><y>0.0</y><z>29.36</z></axis>
+	</animation>
+
+	<animation>
+		<type>billboard</type>
+		<object-name>lightFrontRed</object-name>
+		<object-name>lightBackRed</object-name>
+	</animation>
+	<animation>
+		<type>dist-scale</type>
+		<object-name>lightFrontRed</object-name>
+		<object-name>lightBackRed</object-name>
+    <interpolation>
+      <entry>
+        <ind>0</ind>
+        <dep>1</dep>
+      </entry>
+      <entry>
+        <ind>1500</ind>
+        <dep>3</dep>
+      </entry>
+      <entry>
+        <ind>10000</ind>
+        <dep>5</dep>
+      </entry>
+    </interpolation>
+	</animation>
+
+	<!-- mast light -->
+	<animation>
+		<type>light</type>
+		<light-type>point</light-type>
+		<name>MastLightBall</name>
+		<object-name>light1Ball</object-name>
+		<position>
+			<x>-40.123</x>
+			<y>  0.859</y>
+			<z> 14.094</z>
+		</position>
+		<direction>
+			<x> 1.0</x>
+			<y> 0.0</y>
+			<z> 0.0</z>
+		</direction>
+		<ambient>
+			<r>0.99</r>
+			<g>0.99</g>
+			<b>0.96</b>
+			<a>1.0</a>
+		</ambient>
+		<diffuse>
+			<r>0.99</r>
+			<g>0.99</g>
+			<b>0.96</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>0.99</r>
+			<g>0.99</g>
+			<b>0.96</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.0</l>
+			<q>0.75</q>
+		</attenuation>
+		<exponent>3</exponent>
+		<near-m>0.01</near-m>
+		<far-m>36</far-m>
+		<cutoff>150</cutoff>
+	</animation>
+
+	<animation>
+		<type>light</type>
+		<light-type>spot</light-type>
+    <name>MastLightVolume</name>
+		<object-name>light1Volume</object-name>
+		<position>
+			<x>-43.82</x>
+			<y>  0.048</y>
+			<z> 15.82</z>
+		</position>
+		<direction>
+			<x> 84.81</x>
+			<y> 20.36</y>
+			<z>-35.32</z>
+		</direction>
+		<ambient>
+			<r>0.4</r>
+			<g>0.4</g>
+			<b>0.4</b>
+			<a>0.8</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.002</l>
+			<q>0.00005</q>
+		</attenuation>
+     <exponent>40.0</exponent>
+     <cutoff>120</cutoff>
+     <near-m>0.5</near-m>
+     <far-m>300</far-m>
+	</animation>
+
+	<!-- funnel light to crane-->
+	<animation>
+		<type>light</type>
+		<light-type>point</light-type>
+		<name>FunnelBall</name>
+		<object-name>light2Ball</object-name>
+		<position>
+			<x>-58.0</x>
+			<y>  2.31</y>
+			<z> 14.84</z>
+		</position>
+		<direction>
+			<x> 1.0</x>
+			<y> 0.0</y>
+			<z> 0.0</z>
+		</direction>
+		<ambient>
+			<r>0.99</r>
+			<g>0.99</g>
+			<b>0.96</b>
+			<a>1.0</a>
+		</ambient>
+		<diffuse>
+			<r>0.99</r>
+			<g>0.99</g>
+			<b>0.96</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>0.99</r>
+			<g>0.99</g>
+			<b>0.96</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.0</l>
+			<q>0.75</q>
+		</attenuation>
+		<exponent>3</exponent>
+		<near-m>0.01</near-m>
+		<far-m>36</far-m>
+		<cutoff>150</cutoff>
+	</animation>
+
+	<animation>
+		<type>light</type>
+		<light-type>spot</light-type>
+    <name>FunnelVolume</name>
+		<object-name>light2Volume</object-name>
+		<position>
+			<x>-59.23</x>
+			<y> 1.05</y>
+			<z> 15.02</z>
+		</position>
+		<direction>
+			<x>-13.91</x>
+			<y> 50.63</y>
+			<z>-57.74</z>
+		</direction>
+		<ambient>
+			<r>0.4</r>
+			<g>0.4</g>
+			<b>0.4</b>
+			<a>0.8</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.002</l>
+			<q>0.00005</q>
+		</attenuation>
+     <exponent>40.0</exponent>
+     <cutoff>120</cutoff>
+     <near-m>0.5</near-m>
+     <far-m>300</far-m>
+	</animation>
+
+	<!-- funnel light to cat-->
+	<animation>
+		<type>light</type>
+		<light-type>point</light-type>
+		<name>FunnelBall</name>
+		<object-name>light3Ball</object-name>
+		<position>
+			<x>-65.11</x>
+			<y>  4.26</y>
+			<z> 15.28</z>
+		</position>
+		<direction>
+			<x> 1.0</x>
+			<y> 0.0</y>
+			<z> 0.0</z>
+		</direction>
+		<ambient>
+			<r>0.99</r>
+			<g>0.99</g>
+			<b>0.96</b>
+			<a>1.0</a>
+		</ambient>
+		<diffuse>
+			<r>0.99</r>
+			<g>0.99</g>
+			<b>0.96</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>0.99</r>
+			<g>0.99</g>
+			<b>0.96</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.0</l>
+			<q>0.75</q>
+		</attenuation>
+		<exponent>3</exponent>
+		<near-m>0.01</near-m>
+		<far-m>36</far-m>
+		<cutoff>150</cutoff>
+	</animation>
+
+	<animation>
+		<type>light</type>
+		<light-type>spot</light-type>
+    <name>FunnelVolume</name>
+		<object-name>light3Volume</object-name>
+		<position>
+			<x>-60.98</x>
+			<y> 0.91</y>
+			<z> 16.08</z>
+		</position>
+		<direction>
+			<x>-133.37</x>
+			<y> 73.68</y>
+			<z>-42.17</z>
+		</direction>
+		<ambient>
+			<r>0.4</r>
+			<g>0.4</g>
+			<b>0.4</b>
+			<a>0.8</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.002</l>
+			<q>0.00005</q>
+		</attenuation>
+     <exponent>40.0</exponent>
+     <cutoff>120</cutoff>
+     <near-m>0.5</near-m>
+     <far-m>300</far-m>
+	</animation>
+
+	<!-- light over cargo deck-->
+	<animation>
+		<type>light</type>
+		<light-type>point</light-type>
+		<name>FunnelBall</name>
+		<object-name>light4Ball</object-name>
+		<position>
+			<x>-80.60</x>
+			<y>  -5.26</y>
+			<z> 12.13</z>
+		</position>
+		<direction>
+			<x> 1.0</x>
+			<y> 0.0</y>
+			<z> 0.0</z>
+		</direction>
+		<ambient>
+			<r>0.99</r>
+			<g>0.99</g>
+			<b>0.96</b>
+			<a>1.0</a>
+		</ambient>
+		<diffuse>
+			<r>0.99</r>
+			<g>0.99</g>
+			<b>0.96</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>0.99</r>
+			<g>0.99</g>
+			<b>0.96</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.0</l>
+			<q>0.75</q>
+		</attenuation>
+		<exponent>3</exponent>
+		<near-m>0.01</near-m>
+		<far-m>36</far-m>
+		<cutoff>150</cutoff>
+	</animation>
+
+	<animation>
+		<type>light</type>
+		<light-type>spot</light-type>
+    <name>FunnelVolume</name>
+		<object-name>light4Volume</object-name>
+		<position>
+			<x>-78.66</x>
+			<y> -5.9</y>
+			<z> 12.05</z>
+		</position>
+		<direction>
+			<x>-182.42</x>
+			<y> 38.82</y>
+			<z>-22.43</z>
+		</direction>
+		<ambient>
+			<r>0.4</r>
+			<g>0.4</g>
+			<b>0.4</b>
+			<a>0.8</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.002</l>
+			<q>0.00005</q>
+		</attenuation>
+     <exponent>40.0</exponent>
+     <cutoff>120</cutoff>
+     <near-m>0.5</near-m>
+     <far-m>300</far-m>
+	</animation>
+</PropertyList>

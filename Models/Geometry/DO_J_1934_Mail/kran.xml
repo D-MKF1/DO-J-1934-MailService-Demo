@@ -1,0 +1,273 @@
+<?xml version="1.0"?>
+<!--
+###############################################################################
+##
+##   DO-J-1934-Mail demo for FlightGear 2.8
+##   by Marc Kraus :: Lake of Constance Hangar
+##
+##   Copyright (C) 2012 - 2014  Marc Kraus  (info(at)marc-kraus.de)
+##
+###############################################################################
+-->
+<PropertyList>
+	<path>kran.ac</path>
+
+	<animation>
+		<type>material</type>
+		<object-name>cogwheel</object-name>
+		<object-name>craneBox</object-name>
+		<object-name>craneBoxInner</object-name>
+		<object-name>craneMast</object-name>
+		<object-name>craneReling</object-name>
+		<object-name>craneSockle</object-name>
+		<object-name>craneTower</object-name>
+		<object-name>light</object-name>
+		<object-name>light.001</object-name>
+		<object-name>lightSockle</object-name>
+		<object-name>sockleWheel</object-name>
+		<object-name>towerWheel</object-name>
+		<object-name>wheels</object-name>
+	</animation>
+
+	<!-- Lights -->
+	<animation>
+		<type>select</type>
+		<object-name>lightIllum</object-name>
+		<object-name>lightIllum.001</object-name>
+    <condition>
+      <greater-than>
+        <property>/sim/time/sun-angle-rad</property>
+        <value>1.5</value>
+      </greater-than>
+    </condition>
+	</animation>
+
+	<animation>
+		<type>material</type>
+		<object-name>lightIllum</object-name>
+		<object-name>lightIllum.001</object-name>
+		<emission>
+			<red>0.95</red>
+			<green>0.95</green>
+			<blue>0.95</blue>
+		</emission>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>lightIllum</object-name>
+		<object-name>lightIllum.001</object-name>
+		<object-name>cogwheel</object-name>
+		<object-name>craneBox</object-name>
+		<object-name>craneBoxInner</object-name>
+		<object-name>craneMast</object-name>
+		<object-name>craneReling</object-name>
+		<object-name>craneTower</object-name>
+		<object-name>light</object-name>
+		<object-name>light.001</object-name>
+		<object-name>lightSockle</object-name>
+		<object-name>wheels</object-name>
+		<object-name>mastTowel</object-name>
+		<object-name>craneTowel</object-name>
+		<object-name>towerWheel</object-name>
+		<object-name>craneWheels</object-name>
+		<object-name>kranLights</object-name>
+		<property>surface-positions/crane-turn</property>
+		<factor>1</factor>
+		<center>
+			<x-m>0.0</x-m>
+			<y-m>0.0</y-m>
+			<z-m>0.0</z-m>
+		</center>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>-1</z>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>sockleWheel</object-name>
+		<property>surface-positions/crane-turn</property>
+		<factor>100</factor>
+		<center>
+			<x-m>0.0</x-m>
+			<y-m>0.0</y-m>
+			<z-m>-2.017</z-m>
+		</center>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>towerWheel</object-name>
+		<property>surface-positions/crane-stand</property>
+		<factor>-1000</factor>
+		<center>
+			<x-m>0.0</x-m>
+			<y-m>0.0</y-m>
+			<z-m>7.853</z-m>
+		</center>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z> 
+		</axis>
+	</animation>
+
+  <animation>
+		<type>rotate</type>
+		<object-name>craneMast</object-name>
+		<object-name>wheels</object-name>
+		<object-name>craneTowel</object-name>
+		<object-name>craneWheels</object-name>
+		<property>surface-positions/crane-stand</property>
+    <interpolation>
+      <entry><ind>-1   </ind><dep> -30 </dep></entry>
+      <entry><ind> 0   </ind><dep>  0 </dep></entry>
+      <entry><ind> 1   </ind><dep> 45.0 </dep></entry>
+    </interpolation>
+		<center>
+			<x-m> -1.669 </x-m>
+			<y-m> 0.0 </y-m>
+			<z-m> 0.233</z-m>
+		</center>
+		<axis>
+			<x>0</x>
+			<y>-1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>mastTowel</object-name>
+		<property>surface-positions/crane-stand</property>
+    <interpolation>
+      <entry><ind>-1   </ind><dep>  3 </dep></entry>
+      <entry><ind> 0   </ind><dep>  0 </dep></entry>
+      <entry><ind> 1   </ind><dep>-26 </dep></entry>
+    </interpolation>
+		<center>
+			<x-m> 0.0</x-m>
+			<y-m> 0.0 </y-m>
+			<z-m> 8.388</z-m>
+		</center>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+  <animation>
+    <type>scale</type>
+    <object-name>mastTowel</object-name>
+		<property>surface-positions/crane-stand</property>
+		<center>
+			<x-m> 0.0</x-m>
+			<y-m> 0.0 </y-m>
+			<z-m> 8.388</z-m>
+		</center>
+    <x-min>1.2</x-min>
+    <y-min>1</y-min>
+    <z-min>1</z-min>
+    <x-factor> 2.4</x-factor>
+    <y-factor> 0</y-factor>
+    <z-factor> 0</z-factor>
+  </animation>
+
+	<model>
+		<name>craneTowel</name>
+		<path>Models/Geometry/DO_J_1934_Mail/towelWest.xml</path>
+		<offsets>
+			<x-m>-13.197</x-m>
+			<y-m> 0.0</y-m>
+			<z-m> 8.144</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<name>craneWheels</name>
+		<path>Models/Geometry/DO_J_1934_Mail/kranRaeder.xml</path>
+		<offsets>
+			<x-m> 0.0</x-m>
+			<y-m> 0.0</y-m>
+			<z-m> 0.0</z-m>
+		</offsets>
+	</model>
+
+  <!-- the lights -->
+	<model>
+		<name>kranLights</name>
+		<path>Models/Geometry/DO_J_1934_Mail/kran-lights.xml</path>
+		<offsets>
+			<x-m>0</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+		</offsets>
+	</model>
+
+  <!-- worker -->
+	<animation>
+		<type>translate</type>
+		<object-name>worker4</object-name>
+		<offset-m>2.1</offset-m>
+		<axis><x>1.024</x><y>0.702</y><z>0.93</z></axis>
+	</animation>
+
+	<animation>
+		<type>billboard</type>
+		<object-name>worker4</object-name>
+	</animation>
+	<animation>
+		<type>dist-scale</type>
+		<object-name>worker4</object-name>
+    <interpolation>
+      <entry>
+        <ind>0</ind>
+        <dep>1</dep>
+      </entry>
+      <entry>
+        <ind>1500</ind>
+        <dep>3</dep>
+      </entry>
+      <entry>
+        <ind>10000</ind>
+        <dep>5</dep>
+      </entry>
+    </interpolation>
+	</animation>
+
+  <animation>
+    <type>select</type>
+		<object-name>workerPick2</object-name>	
+    <condition>
+      <not>
+        <property>/controls/special/catapult-carrier-crane/search-carrier</property>
+      </not>
+    </condition>
+  </animation>
+
+
+  <animation>
+      <type>pick</type>
+      <object-name>workerPick2</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>false</repeatable>
+        <binding>
+            <command>nasal</command>
+            <script>doj.fromWestCraneToCat();</script>
+        </binding>
+      </action>
+  </animation>
+
+
+</PropertyList>

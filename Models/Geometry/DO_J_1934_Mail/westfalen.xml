@@ -1,0 +1,359 @@
+<?xml version="1.0"?>
+<!--
+###############################################################################
+##
+##   DO-J-1934-Mail demo for FlightGear 2.8
+##   by Marc Kraus :: Lake of Constance Hangar
+##
+##   Copyright (C) 2012 - 2014  Marc Kraus  (info(at)marc-kraus.de)
+##
+###############################################################################
+-->
+<PropertyList>
+	<description>Westfalen - LufthansaCAM ship [Catapult Aircraft Merchantman] [german: Katapult-Flugzeug-Handelsschiff]</description>
+	<author>Marc Kraus :: Lake of Constance Hangar</author>
+	<status>alpha</status>
+  <version>1.1.4</version>
+	<path>westfalen.ac</path>
+
+  <!-- nasal script you will find in the schwabenland.xml -->
+
+  <animation>
+    <type>material</type>
+    <object-name>cat</object-name>
+    <object-name>rampe</object-name>
+    <object-name>rampeWarten</object-name>
+    <object-name>rumpf</object-name>
+    <object-name>ruder</object-name>
+    <object-name>reling</object-name>
+    <object-name>aufbau</object-name>
+    <object-name>funnelMast</object-name>
+    <texture-prop>texture</texture-prop>
+    <texture>westfalen.png</texture>
+  </animation>
+
+  <animation>
+    <type>material</type>
+    <object-name>boat</object-name>
+    <texture-prop>texture</texture-prop>
+    <texture>schwabenland.png</texture>
+  </animation>
+
+<!-- working for Rembrandt  -->
+	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>transparent</object-name>
+    <object-name>transparent.001</object-name>
+	</effect>
+
+	<animation>
+		<type>interaction</type>
+		<object-name>cat</object-name>
+		<interaction-type>carrier-catapult</interaction-type>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>aufzug</object-name>
+		<property>surface-positions/crane-heave</property>
+		<factor>1.0</factor>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>aufzug2</object-name>
+		<object-name>rampeHeave</object-name>
+		<property>surface-positions/cat-heave</property>
+		<factor>1.0</factor>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>
+
+  <!-- worker -->
+	<animation>
+		<type>translate</type>
+		<object-name>worker1</object-name>
+		<offset-m>9.8</offset-m>
+		<axis><x>7.0</x><y>4.86</y><z>5.01</z></axis>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>worker2</object-name>
+		<offset-m>9.8</offset-m>
+		<axis><x>7.0</x><y>-4.86</y><z>5.02</z></axis>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>worker3</object-name>
+		<offset-m>9.4</offset-m>
+		<axis><x>1.62</x><y>-5.2</y><z>6.78</z></axis>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>worker5</object-name>
+		<offset-m>10.8</offset-m>
+		<axis><x>3.48</x><y>5.18</y><z>8.88</z></axis>
+	</animation>
+
+	<animation>
+		<type>billboard</type>
+		<object-name>worker1</object-name>
+		<object-name>worker2</object-name>
+		<object-name>worker3</object-name>
+		<!-- <object-name>worker4</object-name>  working on the krane.xml -->
+		<object-name>worker5</object-name>
+	</animation>
+	<animation>
+		<type>dist-scale</type>
+		<object-name>worker1</object-name>
+		<object-name>worker2</object-name>
+		<object-name>worker3</object-name>
+		<!-- <object-name>worker4</object-name>  working on the krane.xml -->
+		<object-name>worker5</object-name>
+    <interpolation>
+      <entry>
+        <ind>0</ind>
+        <dep>1</dep>
+      </entry>
+      <entry>
+        <ind>1500</ind>
+        <dep>3</dep>
+      </entry>
+      <entry>
+        <ind>10000</ind>
+        <dep>5</dep>
+      </entry>
+    </interpolation>
+	</animation>
+
+  <animation>
+      <type>pick</type>
+      <object-name>workerPick</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>false</repeatable>
+        <binding>
+            <command>property-toggle</command>
+            <property>/controls/special/catapult-carrier-crane/search-carrier</property>
+        </binding>
+      </action>
+  </animation>
+
+  <animation>
+    <type>select</type>
+		<object-name>worker3</object-name>
+    <condition>
+      <less-than>
+        <property>/position/altitude-ft</property>
+        <value>29.0</value>
+      </less-than>
+    </condition>
+  </animation>
+
+  <animation>
+    <type>select</type>
+		<object-name>worker5</object-name>
+		<object-name>workerPick3</object-name>	
+    <condition>
+      <and>
+        <not>
+          <property>/controls/special/catapult-carrier-crane/search-carrier</property>
+        </not>
+        <greater-than>
+          <property>/position/altitude-ft</property>
+          <value>29.0</value>
+        </greater-than>
+        <less-than>
+          <property>/position/altitude-ft</property>
+          <value>31.0</value>
+        </less-than>
+      </and>
+    </condition>
+  </animation>
+
+  <animation>
+      <type>pick</type>
+      <object-name>workerPick3</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>false</repeatable>
+        <binding>
+            <command>nasal</command>
+            <script>doj.fromWestCraneToCat();</script>
+        </binding>
+      </action>
+  </animation>
+
+
+  <!-- The Crane -->
+	<model>
+		<name>kran</name>
+		<path>Models/Geometry/DO_J_1934_Mail/kran.xml</path>
+		<offsets>
+			<x-m>2.193</x-m>
+			<y-m> 0.0</y-m>
+			<z-m> 9.063</z-m>
+		</offsets>
+	</model>
+
+  <!-- the lights -->
+	<model>
+		<name>WestDeckLights</name>
+		<path>Models/Geometry/DO_J_1934_Mail/west-lights.xml</path>
+		<offsets>
+			<x-m>0</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+		</offsets>
+	</model>
+
+  <!-- effects -->
+	<model>
+		<name>chimneySmoke</name>
+		<path>Models/Geometry/DO_J_1934_Mail/Effects/chimney-smoke.xml</path>
+		<offsets>
+			<x-m>-60.541</x-m>
+			<y-m>-0.0278</y-m>
+			<z-m>19.7303</z-m>
+		</offsets>
+	</model>
+
+  <!-- Cargo on deck -->
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_1.xml</path>
+		<name>cargoPack1</name>
+		<offsets>
+			<x-m> -80.691</x-m>
+			<y-m>  2.942</y-m>
+			<z-m>  6.203</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_2.xml</path>
+		<name>cargoPack2</name>
+		<offsets>
+			<x-m> -80.663</x-m>
+			<y-m> -4.059</y-m>
+			<z-m>  6.203</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_3.xml</path>
+		<name>cargoPack3</name>
+		<offsets>
+			<x-m> -85.513</x-m>
+			<y-m>  -3.542</y-m>
+			<z-m>   6.203</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_4.xml</path>
+		<name>cargoPack4</name>
+		<offsets>
+			<x-m>-85.151</x-m>
+			<y-m> 3.380</y-m>
+			<z-m> 6.203</z-m>
+			<heading-deg>-180</heading-deg>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_5.xml</path>
+		<name>cargoPack5</name>
+		<offsets>
+			<x-m>-93.057</x-m>
+			<y-m> 3.368</y-m>
+			<z-m> 3.928</z-m>
+			<heading-deg>-90</heading-deg>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_6.xml</path>
+		<name>cargoPack6</name>
+		<offsets>
+			<x-m>-101.216</x-m>
+			<y-m> 2.78</y-m>
+			<z-m> 3.928</z-m>
+			<heading-deg>-270</heading-deg>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_7.xml</path>
+		<name>cargoPack7</name>
+		<offsets>
+			<x-m>-93.017</x-m>
+			<y-m> -2.47</y-m>
+			<z-m> 3.928</z-m>
+			<heading-deg>-270</heading-deg>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_8.xml</path>
+		<name>cargoPack8</name>
+		<offsets>
+			<x-m>-93.017</x-m>
+			<y-m> -5.48</y-m>
+			<z-m> 3.928</z-m>
+			<heading-deg>-90</heading-deg>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_9.xml</path>
+		<name>cargoPack9</name>
+		<offsets>
+			<x-m>-101.568</x-m>
+			<y-m> -5.417</y-m>
+			<z-m> 3.928</z-m>
+			<heading-deg>-270</heading-deg>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_10.xml</path>
+		<name>cargoPack10</name>
+		<offsets>
+			<x-m>-101.843</x-m>
+			<y-m> -2.538</y-m>
+			<z-m> 3.928</z-m>
+			<heading-deg>-270</heading-deg>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_11.xml</path>
+		<name>cargoPack11</name>
+		<offsets>
+			<x-m>-59.36</x-m>
+			<y-m> -3.247</y-m>
+			<z-m> 8.713</z-m>
+			<heading-deg>-90</heading-deg>
+		</offsets>
+	</model>
+
+	<!-- *** LoD *** -->
+	<animation>
+		<type>range</type>
+		<max-m>200000</max-m>
+	</animation>
+
+</PropertyList>

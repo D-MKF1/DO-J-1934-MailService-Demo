@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<PropertyList>
+
+	<scenario>
+		<name>Lufthansa Mail Service to South America in 1934-1939</name>
+		<description>
+			The Schwabenland (before Schwarzenfels) was a carrier for the german Lufthansa,
+      placed near Bathurst (now Banjul, Gambia).
+      The second carrier was placed near South America on Fernando de Noronha, called Westfalen
+      With catapults it was possible to fire up seaplanes like the DO-J f Bos (Wal).
+      Before the second world war, Lufthansa managed a mail traffic with this two carrier between
+      Germany and South America.
+		</description>
+
+		<entry>
+			<type>carrier</type>
+			<name>Schwabenland</name>
+			<pennant-number>LH1</pennant-number>
+			<model>Models/Geometry/DO_J_1934_Mail/schwabenland.xml</model>
+			<latitude>13.46</latitude>
+			<longitude>-16.57</longitude>
+			<heading>305</heading>
+      <altitude>13.8</altitude>
+			<speed>0</speed>
+			<rudder>0</rudder>
+			<turn-radius-ft>0</turn-radius-ft>
+			<parking-pos>
+				<name>cat</name>
+				<x-offset-m>30.0</x-offset-m>
+				<y-offset-m>7.261  </y-offset-m>
+				<z-offset-m>6.242</z-offset-m>
+			</parking-pos>
+			<parking-pos>
+				<name>wait</name>
+				<x-offset-m>56.95</x-offset-m>
+				<y-offset-m>7.261  </y-offset-m>
+				<z-offset-m>7.79</z-offset-m>
+			</parking-pos>
+			<parking-pos>
+				<name>canvas</name>
+				<heading-offset-deg>180</heading-offset-deg>
+				<x-offset-m>-18.0</x-offset-m>
+				<y-offset-m> 1.877</y-offset-m>
+				<z-offset-m>-3.986</z-offset-m>
+			</parking-pos>
+			<parking-pos>
+				<name>sea1</name>
+				<heading-offset-deg>180</heading-offset-deg>
+				<x-offset-m>-400.0</x-offset-m>
+				<y-offset-m> 52.0</y-offset-m>
+				<z-offset-m>-3.986</z-offset-m>
+			</parking-pos>
+			<parking-pos>
+				<name>sea2</name>
+				<heading-offset-deg>180</heading-offset-deg>
+				<x-offset-m>-400.0</x-offset-m>
+				<y-offset-m>-52.0</y-offset-m>
+				<z-offset-m>-3.986</z-offset-m>
+			</parking-pos>
+			<parking-pos>
+				<name>sea3</name>
+				<heading-offset-deg>180</heading-offset-deg>
+				<x-offset-m>-440.0</x-offset-m>
+				<y-offset-m> 72.0</y-offset-m>
+				<z-offset-m>-3.986</z-offset-m>
+			</parking-pos>
+			<parking-pos>
+				<name>sea4</name>
+				<heading-offset-deg>180</heading-offset-deg>
+				<x-offset-m>-440.0</x-offset-m>
+				<y-offset-m>-72.0</y-offset-m>
+				<z-offset-m>-3.986</z-offset-m>
+			</parking-pos>
+			<max-lat>0.0005</max-lat>
+			<min-lat>0.0001</min-lat>
+			<max-long>0.005</max-long>
+			<min-long>0.001</min-long>
+			<mp-control>false</mp-control>
+			<ai-control>true</ai-control>
+		</entry>
+
+		<entry>
+			<type>carrier</type>
+			<name>Westfalen</name>
+			<pennant-number>LH2</pennant-number>
+			<model>Models/Geometry/DO_J_1934_Mail/westfalen.xml</model>
+			<latitude>-3.82</latitude>
+			<longitude>-32.42</longitude>
+			<heading>70</heading>
+      <altitude>0</altitude>
+			<speed>0</speed>
+			<rudder>0</rudder>
+			<turn-radius-ft>0</turn-radius-ft>
+			<parking-pos>
+				<name>cat</name>
+				<heading-offset-deg>-2.8</heading-offset-deg>
+        <pitch-offset-deg>-5</pitch-offset-deg>
+				<x-offset-m>-77.674</x-offset-m>
+				<y-offset-m>  7.06  </y-offset-m>
+				<z-offset-m>  10.72  </z-offset-m>
+			</parking-pos>
+			<parking-pos>
+				<name>canvas</name>
+				<x-offset-m> 17.0</x-offset-m>
+				<y-offset-m>  0.0</y-offset-m>
+				<z-offset-m> -1.5</z-offset-m>
+			</parking-pos>
+			<parking-pos>
+				<name>wait</name>
+				<heading-offset-deg>145</heading-offset-deg>
+				<x-offset-m>-29.408</x-offset-m>
+				<y-offset-m>-3.216  </y-offset-m>
+				<z-offset-m> 6.682</z-offset-m>
+			</parking-pos>
+			<parking-pos>
+				<name>sea1</name>
+				<heading-offset-deg>0</heading-offset-deg>
+				<x-offset-m>134.0</x-offset-m>
+				<y-offset-m>-25.0  </y-offset-m>
+				<z-offset-m> 2.0</z-offset-m>
+			</parking-pos>
+			<parking-pos>
+				<name>sea2</name>
+				<heading-offset-deg>0</heading-offset-deg>
+				<x-offset-m>134.0</x-offset-m>
+				<y-offset-m> 25.0  </y-offset-m>
+				<z-offset-m> 2.0</z-offset-m>
+			</parking-pos>
+			<parking-pos>
+				<name>sea3</name>
+				<heading-offset-deg>0</heading-offset-deg>
+				<x-offset-m>230.0</x-offset-m>
+				<y-offset-m>-75.0</y-offset-m>
+				<z-offset-m>  2.0</z-offset-m>
+			</parking-pos>
+			<parking-pos>
+				<name>sea4</name>
+				<heading-offset-deg>0</heading-offset-deg>
+				<x-offset-m>230.0</x-offset-m>
+				<y-offset-m> 75.0</y-offset-m>
+				<z-offset-m>  2.0</z-offset-m>
+			</parking-pos>
+
+			<max-lat>0.0005</max-lat>
+			<min-lat>0.0001</min-lat>
+			<max-long>0.005</max-long>
+			<min-long>0.001</min-long>
+			<mp-control>false</mp-control>
+			<ai-control>true</ai-control>
+		</entry>
+	</scenario>
+</PropertyList>
+
+

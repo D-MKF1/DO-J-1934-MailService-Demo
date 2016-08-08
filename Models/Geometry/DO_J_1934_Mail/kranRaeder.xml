@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!--
+###############################################################################
+##
+##   DO-J-1934-Mail demo for FlightGear 2.8
+##   by Marc Kraus :: Lake of Constance Hangar
+##
+##   Copyright (C) 2012 - 2014  Marc Kraus  (info(at)marc-kraus.de)
+##
+###############################################################################
+-->
+<PropertyList>
+	<path>kranRaeder.ac</path>
+
+	<animation>
+		<object-name>craneWheel</object-name>
+		<object-name>craneWheel2</object-name>
+		<object-name>smallTowel</object-name>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>craneWheel</object-name>
+		<property>surface-positions/crane-stand</property>
+		<factor>1000</factor>
+		<center>
+			<x-m>-5.419</x-m>
+			<y-m>0.0</y-m>
+			<z-m>7.847</z-m>
+		</center>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z> 
+		</axis>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>craneWheel2</object-name>
+		<property>surface-positions/crane-stand</property>
+		<factor>1000</factor>
+		<center>
+			<x-m>-14.204</x-m>
+			<y-m>0.0</y-m>
+			<z-m>8.686</z-m>
+		</center>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z> 
+		</axis>
+	</animation>
+
+</PropertyList>

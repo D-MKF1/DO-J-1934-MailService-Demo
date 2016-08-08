@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--
+###############################################################################
+##
+##   DO-J-1934-Mail demo for FlightGear 2.8
+##   by Marc Kraus :: Lake of Constance Hangar
+##
+##   Copyright (C) 2012 - 2014  Marc Kraus  (info(at)marc-kraus.de)
+##
+###############################################################################
+-->
+<PropertyList>
+	<path>crane.ac</path>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>crane</object-name>
+		<object-name>craneSockle</object-name>
+		<object-name>drahtseil</object-name>
+		<object-name>crane-towel</object-name>
+		<property>surface-positions/crane-turn</property>
+		<factor>1</factor>
+		<center>
+			<x-m>0.0</x-m>
+			<y-m>0.0</y-m>
+			<z-m>0.0</z-m>
+		</center>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>-1</z>
+		</axis>
+	</animation>
+
+  <animation>
+		<type>rotate</type>
+		<object-name>crane</object-name>
+		<object-name>drahtseil</object-name>
+		<object-name>crane-towel</object-name>
+		<property>surface-positions/crane-stand</property>
+    <interpolation>
+      <entry><ind>-1   </ind><dep> -30 </dep></entry>
+      <entry><ind> 0   </ind><dep>  0 </dep></entry>
+      <entry><ind> 1   </ind><dep> 45.0 </dep></entry>
+    </interpolation>
+		<center>
+			<x-m> 0.0 </x-m>
+			<y-m> 0.0 </y-m>
+			<z-m> 0.0</z-m>
+		</center>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+	<model>
+		<name>crane-towel</name>
+		<path>Models/Geometry/DO_J_1934_Mail/towel.xml</path>
+		<offsets>
+			<x-m>11.241</x-m>
+			<y-m> 0.0</y-m>
+			<z-m> 7.199</z-m>
+		</offsets>
+	</model>
+
+</PropertyList>

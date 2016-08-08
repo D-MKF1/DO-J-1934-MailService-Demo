@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+###############################################################################
+##
+##   DO-J-1934-Mail demo for FlightGear 2.8
+##   by Marc Kraus :: Lake of Constance Hangar
+##
+##   Copyright (C) 2012 - 2014  Marc Kraus  (info(at)marc-kraus.de)
+##
+###############################################################################
+-->
+<PropertyList>
+
+	<path>kran-lights.ac</path>
+
+	<!-- Rembrand - Search light -->
+	<animation>
+		<type>select</type>
+		<object-name>SearchBall</object-name>
+		<object-name>SearchBall1</object-name>
+		<object-name>SearchVolume</object-name>
+		<object-name>SearchVolume1</object-name>
+		<object-name>LightVolume</object-name>
+    <condition>
+      <and>
+			  <property>/sim/rendering/rembrandt/enabled</property>
+        <greater-than>
+          <property>/sim/time/sun-angle-rad</property>
+          <value>1.5</value>
+        </greater-than>
+      </and>
+    </condition>
+	</animation>
+
+	<!-- crane light -->
+	<animation>
+		<type>light</type>
+		<light-type>spot</light-type>
+		<name>LightCraneBox</name>
+		<object-name>LightVolume</object-name>
+		<position>
+			<x> 0.067</x>
+			<y> 0.063</y>
+			<z> 7.776</z>
+		</position>
+		<direction>
+			<x>-0.84</x>
+			<y> 0.063</y>
+			<z>-8.49</z>
+		</direction>
+		<ambient>
+			<r>0.4</r>
+			<g>0.4</g>
+			<b>0.4</b>
+			<a>0.8</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.002</l>
+			<q>0.00005</q>
+		</attenuation>
+     <exponent>30.0</exponent>
+     <cutoff>120</cutoff>
+     <near-m>0.5</near-m>
+     <far-m>120</far-m>
+	</animation>
+
+	<!-- crane light top white -->
+	<animation>
+		<type>light</type>
+		<light-type>point</light-type>
+		<name>SearchBigBall</name>
+		<object-name>SearchBall</object-name>
+		<position>
+			<x>-1.58</x>
+			<y>-0.843</y>
+			<z>11.617</z>
+		</position>
+		<direction>
+			<x> 1.0</x>
+			<y> 0.0</y>
+			<z> 0.0</z>
+		</direction>
+		<ambient>
+			<r>0.99</r>
+			<g>0.99</g>
+			<b>0.96</b>
+			<a>1.0</a>
+		</ambient>
+		<diffuse>
+			<r>0.99</r>
+			<g>0.99</g>
+			<b>0.96</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>0.99</r>
+			<g>0.99</g>
+			<b>0.96</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.0</l>
+			<q>0.75</q>
+		</attenuation>
+		<exponent>3</exponent>
+		<near-m>0.01</near-m>
+		<far-m>36</far-m>
+		<cutoff>150</cutoff>
+	</animation>
+
+	<animation>
+		<type>light</type>
+		<light-type>spot</light-type>
+    <name>SearchBig</name>
+		<object-name>SearchVolume</object-name>
+		<position>
+			<x>-0.621</x>
+			<y>-0.843</y>
+			<z>11.617</z>
+		</position>
+		<direction>
+			<x>-275.39</x>
+			<y>-0.843</y>
+			<z>-184.308</z>
+		</direction>
+		<ambient>
+			<r>0.4</r>
+			<g>0.4</g>
+			<b>0.4</b>
+			<a>0.8</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.002</l>
+			<q>0.00005</q>
+		</attenuation>
+     <exponent>40.0</exponent>
+     <cutoff>120</cutoff>
+     <near-m>0.5</near-m>
+     <far-m>300</far-m>
+	</animation>
+
+	<!-- crane light bottom white -->
+	<animation>
+		<type>light</type>
+		<light-type>point</light-type>
+		<name>SearchSmallBall</name>
+		<object-name>SearchBall1</object-name>
+		<position>
+			<x>-4.13</x>
+			<y>-1.66</y>
+			<z> 4.43</z>
+		</position>
+		<direction>
+			<x> 1.0</x>
+			<y> 0.0</y>
+			<z> 0.0</z>
+		</direction>
+		<ambient>
+			<r>0.99</r>
+			<g>0.99</g>
+			<b>0.96</b>
+			<a>1.0</a>
+		</ambient>
+		<diffuse>
+			<r>0.99</r>
+			<g>0.99</g>
+			<b>0.96</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>0.99</r>
+			<g>0.99</g>
+			<b>0.96</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.0</l>
+			<q>0.75</q>
+		</attenuation>
+		<exponent>3</exponent>
+		<near-m>0.01</near-m>
+		<far-m>36</far-m>
+		<cutoff>150</cutoff>
+	</animation>
+
+	<animation>
+		<type>light</type>
+		<light-type>spot</light-type>
+    <name>SearchSmall</name>
+		<object-name>SearchVolume1</object-name>
+		<position>
+			<x>-2.99</x>
+			<y>-1.66</y>
+			<z> 4.43</z>
+		</position>
+		<direction>
+			<x>-275.5</x>
+			<y>-1.66</y>
+			<z>-107.95</z>
+		</direction>
+		<ambient>
+			<r>0.4</r>
+			<g>0.4</g>
+			<b>0.4</b>
+			<a>0.8</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.002</l>
+			<q>0.00005</q>
+		</attenuation>
+     <exponent>40.0</exponent>
+     <cutoff>120</cutoff>
+     <near-m>0.5</near-m>
+     <far-m>300</far-m>
+	</animation>
+	
+
+	
+</PropertyList>

@@ -1,0 +1,848 @@
+<?xml version="1.0"?>
+<!--
+###############################################################################
+##
+##   DO-J-1934-Mail demo for FlightGear 2.8
+##   by Marc Kraus :: Lake of Constance Hangar
+##
+##   Copyright (C) 2012 - 2014  Marc Kraus  (info(at)marc-kraus.de)
+##
+###############################################################################
+-->
+<PropertyList>
+	<description>Schwabenland - LufthansaCAM ship [Catapult Aircraft Merchantman] [german: Katapult-Flugzeug-Handelsschiff]</description>
+	<author>Marc Kraus :: Lake of Constance Hangar</author>
+	<status>alpha</status>
+  <version>1.1.4</version>
+	<path>schwabenland.ac</path>
+  <!-- ######### This script also include the script for the Westfalen ########## -->
+  <!-- show us the cargo on Schwabenland and Westfalen, if we are not in the DO-J -->
+	<nasal>
+		<load>
+      var debug_sl = 0;
+
+      var schw_craneLon = -16.570024;
+      var schw_craneLat =  13.46004;
+      var schw_crane_pos = geo.Coord.new();
+      schw_crane_pos.set_latlon( schw_craneLat, schw_craneLon);
+
+      var west_craneLon = -32.42001855;
+      var west_craneLat = -3.820006783;
+      var west_crane_pos = geo.Coord.new();
+      west_crane_pos.set_latlon( west_craneLat, west_craneLon);
+
+      var schwabenland_index = -1;    # the index of the /ai/models/carrier [is_cam_carrier]
+      var westfalen_index    = -1;
+
+      var max_dis_to_carrier = 150000; # Meter  - In this range, we got the crane and loading informations
+
+      var i_am_a_do_j = 0;
+      var is_on_cam_crane = -1;
+      var somebody_is_heaving = 0;
+      var schwabenland_index = -1;
+      var westfalen_index = -1;
+
+      var is_cam_carrier = func {
+          if (debug_sl) print("Suchfunktion is_cam_carrier aufgerufen."); 
+          var mp_cat = props.globals.getNode("/ai/models").getChildren("carrier");
+          var tt = size(mp_cat);
+
+
+          var my_pos  = geo.aircraft_position();
+
+          var shipsName = "";
+          schwabenland_index = -1;
+          westfalen_index = -1;
+
+          settimer(func{ is_cam_carrier(); }, 11.125);
+
+          for(var i = 0; i &lt; tt; i += 1) {
+
+              schwabenland_index = -1;
+              westfalen_index = -1;
+
+              if (mp_cat[i].getNode("name") != nil) var shipsName = mp_cat[i].getNode("name").getValue();
+              if (shipsName == "Schwabenland" and my_pos.distance_to(schw_crane_pos) &lt; max_dis_to_carrier ){
+                if (debug_sl) print(shipsName~" gefunden");
+                schwabenland_index = i;
+                return;
+              }
+              if (shipsName == "Westfalen" and my_pos.distance_to(west_crane_pos) &lt; max_dis_to_carrier ){
+                if (debug_sl) print(shipsName~" gefunden");
+                westfalen_index = i;
+                return;
+              }
+          }
+      }
+
+      var show_cam_crane = func (d = 0) {
+
+        var is_in_action = getprop("/ai/models/multiplayer["~d~"]/sim/multiplay/generic/int[18]") or 0;
+
+        if (schwabenland_index >= 0){
+          if (is_in_action or
+              getprop("/ai/models/multiplayer["~d~"]/sim/multiplay/generic/string[1]") == "Engaged" or
+              getprop("/ai/models/multiplayer["~d~"]/sim/multiplay/generic/string[1]") == "Launching") {
+            setprop("/ai/models/carrier["~schwabenland_index~"]/surface-positions/crane-turn",
+                    getprop("/ai/models/multiplayer["~d~"]/sim/multiplay/generic/float[12]") or 0);
+            setprop("/ai/models/carrier["~schwabenland_index~"]/surface-positions/crane-stand",
+                    getprop("/ai/models/multiplayer["~d~"]/sim/multiplay/generic/float[13]") or 0);
+            setprop("/ai/models/carrier["~schwabenland_index~"]/surface-positions/crane-hook-locked",
+                    getprop("/ai/models/multiplayer["~d~"]/sim/multiplay/generic/int[19]") or 0);
+            settimer ( func { show_cam_crane(d); }, 0);
+            return;
+          }else{
+            interpolate("/ai/models/carrier["~schwabenland_index~"]/surface-positions/crane-turn", 0, 4);
+            interpolate("/ai/models/carrier["~schwabenland_index~"]/surface-positions/crane-stand", 0, 3);
+            setprop("/ai/models/carrier["~schwabenland_index~"]/surface-positions/crane-hook-locked",0);
+          }
+
+          if (debug_sl) print("show_cam_crane is running");
+        }
+
+        if (westfalen_index >= 0){
+          if (is_in_action) {
+            setprop("/ai/models/carrier["~westfalen_index~"]/surface-positions/crane-turn",
+                    getprop("/ai/models/multiplayer["~d~"]/sim/multiplay/generic/float[12]") or 0);
+            setprop("/ai/models/carrier["~westfalen_index~"]/surface-positions/crane-stand",
+                    getprop("/ai/models/multiplayer["~d~"]/sim/multiplay/generic/float[13]") or 0);
+            setprop("/ai/models/carrier["~westfalen_index~"]/surface-positions/crane-hook-locked",
+                    getprop("/ai/models/multiplayer["~d~"]/sim/multiplay/generic/int[19]") or 0);
+            settimer ( func { show_cam_crane(d); }, 0);
+            return;
+          }else{
+            interpolate("/ai/models/carrier["~westfalen_index~"]/surface-positions/crane-turn", 0, 4);
+            interpolate("/ai/models/carrier["~westfalen_index~"]/surface-positions/crane-stand", 0, 3);
+            setprop("/ai/models/carrier["~westfalen_index~"]/surface-positions/crane-hook-locked",0);
+          }
+
+          if (debug_sl) print("show_cam_crane is running");
+        }
+      }
+
+      var show_cam_cargo = func {
+
+        var mpS = props.globals.getNode("/ai/models").getChildren("multiplayer");
+        var othermps = size(mpS);
+        var is_on_cam_crane = -1;
+        var it_is_in_action = 0;
+        
+        settimer ( show_cam_cargo, 1.25);
+
+        for(var d = 0; d &lt; othermps; d += 1) {
+        
+            if (debug_sl) print("loop on multiplayer is running");
+
+            if (mpS[d].getNode("sim/model/path").getValue() == "Aircraft/DO-J-II/Models/DO-J-II.xml" and
+                mpS[d].getNode("id").getValue() >= 0) 
+            {
+            
+            	if (debug_sl) print("loop for multiplayer DO-J's is running");
+
+              it_is_in_action = mpS[d].getNode("sim/multiplay/generic/int[18]").getValue() or 0;
+
+              if (schwabenland_index >= 0){
+                if(it_is_in_action or
+                   mpS[d].getNode("sim/multiplay/generic/string[1]").getValue() == "Engaged" or
+                   mpS[d].getNode("sim/multiplay/generic/string[1]").getValue() == "Launching") { 
+                  show_cam_crane(d);
+                  setprop("/controls/special/catapult-carrier-crane/cargo-schwabenland", getprop("/ai/models/multiplayer["~d~"]/sim/multiplay/generic/float[15]") or 18);
+                  setprop("/ai/models/carrier["~schwabenland_index~"]/controls/cargo", getprop("/ai/models/multiplayer["~d~"]/sim/multiplay/generic/float[15]") or 18);
+                                    
+                  var nameOf = getprop("/ai/models/multiplayer["~d~"]/callsign");
+              		if (debug_sl) print("You recept loading informations from "~ nameOf);
+                }
+              }
+
+              if (westfalen_index >= 0){
+              	if(it_is_in_action) show_cam_crane(d);
+              
+		            if(mpS[d].getNode("sim/multiplay/generic/string[1]").getValue() == "Engaged" or
+		               mpS[d].getNode("sim/multiplay/generic/string[1]").getValue() == "Launching") { 
+		              setprop("/controls/special/catapult-carrier-crane/cargo-westfalen", getprop("/ai/models/multiplayer["~d~"]/sim/multiplay/generic/float[18]") or 18);
+		              setprop("/ai/models/carrier["~westfalen_index~"]/controls/cargo", getprop("/ai/models/multiplayer["~d~"]/sim/multiplay/generic/float[18]") or 18);
+		              
+		              var nameOf = getprop("/ai/models/multiplayer["~d~"]/callsign");
+		          		if (debug_sl) print("You recept loading informations from "~ nameOf);
+		            }
+              }
+ 
+          }
+        }
+        
+        # other Aircraft see load on deck
+ 				if(othermps &lt;= 0){
+            if (schwabenland_index >= 0) setprop("/ai/models/carrier["~schwabenland_index~"]/controls/cargo", 18);
+            if (westfalen_index >= 0) setprop("/ai/models/carrier["~westfalen_index~"]/controls/cargo", 18);  
+				}
+
+      }
+
+
+      if(getprop("sim/model/path") == "Aircraft/DO-J-II/Models/DO-J-II.xml"){
+        i_am_a_do_j = 1;
+      }
+
+      if(!i_am_a_do_j){
+        is_cam_carrier();
+      }
+      
+      show_cam_cargo();
+
+			if (debug_sl and i_am_a_do_j) print("Sie fliegen eine DO-J");
+			if (debug_sl and !i_am_a_do_j) print("Sie fliegen KEINE DO-J");
+
+		</load>
+		<unload><!-- nix --></unload>
+	</nasal>
+
+  <animation>
+    <type>material</type>
+    <object-name>aufbau</object-name>
+    <object-name>boat</object-name>
+    <object-name>cat</object-name>
+    <object-name>rampe</object-name>
+    <object-name>reling</object-name>
+    <object-name>rumpf</object-name>
+    <object-name>takelage</object-name>
+    <object-name>taue</object-name>
+    <texture-prop>texture</texture-prop>
+    <texture>schwabenland.png</texture>
+  </animation>
+
+<!-- working for Rembrandt  -->
+	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>segel</object-name>
+	</effect>
+
+<!-- towles -->
+	<animation>
+		<type>interaction</type>
+		<object-name>cat</object-name>
+		<interaction-type>carrier-catapult</interaction-type>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>aufzug</object-name>
+		<property>surface-positions/crane-heave</property>
+		<factor>1.0</factor>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>
+
+  <animation>
+    <type>select</type>
+		<object-name>windows</object-name>
+    <condition>
+      <greater-than>
+        <property>/sim/time/sun-angle-rad</property>
+        <value>1.5</value>
+      </greater-than>
+    </condition>
+  </animation>
+
+  <animation>
+    <type>material</type>
+		<object-name>windows</object-name>
+    <emission>
+      <red>0.7</red>
+      <green>0.65</green>
+      <blue>0</blue>
+      <property>/sim/time/sun-angle-rad</property>
+      <factor>1</factor>
+    </emission>
+  </animation>
+
+  <!-- worker -->
+	<animation>
+		<type>translate</type>
+		<object-name>worker1</object-name>
+		<offset-m>6.3</offset-m>
+		<axis><x>-5.7754</x><y>0</y><z>2.9286</z></axis>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>worker2</object-name>
+		<offset-m>7.3</offset-m>
+		<axis><x>-5.7754</x><y>4.0</y><z>2.9286</z></axis>
+	</animation>
+
+	<animation>
+		<type>billboard</type>
+		<object-name>worker1</object-name>
+		<object-name>worker2</object-name>
+	</animation>
+	<animation>
+		<type>dist-scale</type>
+		<object-name>worker1</object-name>
+		<object-name>worker2</object-name>
+    <interpolation>
+      <entry>
+        <ind>0</ind>
+        <dep>1</dep>
+      </entry>
+      <entry>
+        <ind>1500</ind>
+        <dep>3</dep>
+      </entry>
+      <entry>
+        <ind>10000</ind>
+        <dep>5</dep>
+      </entry>
+    </interpolation>
+	</animation>
+
+  <animation>
+    <type>select</type>
+		<object-name>workerPick</object-name>	
+    <condition>
+      <not>
+        <property>/controls/special/catapult-carrier-crane/search-carrier</property>
+      </not>
+    </condition>
+  </animation>
+
+  <animation>
+      <type>pick</type>
+      <object-name>workerPick</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>false</repeatable>
+        <binding>
+            <command>property-toggle</command>
+            <property>/controls/special/catapult-carrier-crane/search-carrier</property>
+        </binding>
+      </action>
+  </animation>
+
+  <!-- Stan Laurel helps on board -->
+	<animation>
+		<type>translate</type>
+		<object-name>stan1</object-name>
+		<object-name>stan2</object-name>
+		<object-name>stan3</object-name>
+		<offset-m>8.95</offset-m>
+		<axis><x>-3.61</x><y>5.0</y><z>5.95</z></axis>
+	</animation>
+
+	<animation>
+		<type>billboard</type>
+		<object-name>stan1</object-name>
+		<object-name>stan2</object-name>
+		<object-name>stan3</object-name>
+	</animation>
+
+	<animation>
+		<type>dist-scale</type>
+		<object-name>stan1</object-name>
+		<object-name>stan2</object-name>
+		<object-name>stan3</object-name>
+    <interpolation>
+      <entry>
+        <ind>0</ind>
+        <dep>1</dep>
+      </entry>
+      <entry>
+        <ind>1500</ind>
+        <dep>3</dep>
+      </entry>
+      <entry>
+        <ind>10000</ind>
+        <dep>5</dep>
+      </entry>
+    </interpolation>
+	</animation>
+
+  <animation>
+    <type>select</type>
+		<object-name>stan1</object-name>
+		<object-name>stanPick1</object-name>	
+    <condition>
+      <not>
+        <property>/controls/special/catapult-carrier-crane/search-carrier</property>
+      </not>
+      <or>
+        <equals>
+          <property>/controls/special/pos-stan</property>
+          <value>1</value>
+        </equals>
+        <not>
+          <property>/engines/engine[0]/running</property>
+        </not>
+        <not>
+          <property>/engines/engine[1]/running</property>
+        </not>
+        <less-than-equals>
+          <property>/controls/engines/engine[0]/throttle</property>
+          <value>0.7</value> 
+        </less-than-equals>
+      </or>
+    </condition>
+  </animation>
+
+  <animation>
+    <type>select</type>
+		<object-name>stan2</object-name>
+		<object-name>stanPick2</object-name>	
+    <condition>
+      <and>
+        <equals>
+          <property>/controls/special/pos-stan</property>
+          <value>2</value>
+        </equals>
+        <property>/engines/engine[0]/running</property>
+        <property>/engines/engine[1]/running</property>
+        <greater-than>
+          <property>/controls/engines/engine[0]/throttle</property>
+          <value>0.7</value> 
+        </greater-than>
+      </and>
+    </condition>
+  </animation>
+
+  <animation>
+    <type>select</type>
+		<object-name>stan3</object-name>	
+    <condition>
+      <and>
+        <equals>
+          <property>/controls/special/pos-stan</property>
+          <value>3</value>
+        </equals>
+        <property>/engines/engine[0]/running</property>
+        <property>/engines/engine[1]/running</property>
+        <greater-than>
+          <property>/controls/engines/engine[0]/throttle</property>
+          <value>0.7</value> 
+        </greater-than>
+      </and>
+    </condition>
+  </animation>
+
+  <!-- pick stan 1 to mount the catapult hook -->
+  <animation>
+  <type>pick</type>
+   <object-name>stanPick1</object-name>
+   <visible>false</visible>
+   <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <interval-sec>0.2</interval-sec>
+    <binding>
+        <command>nasal</command>
+        <script>
+          if(getprop("/gear/launchbar/state") == "Engaged" and 
+            (!getprop("/engines/engine[0]/running") or !getprop("/engines/engine[1]/running"))){
+              screen.log.write("Hey captain, your DO-J is a very good seaplane but not a glider!", 1.0, 0.0, 0.0);
+              screen.log.write("Please START ENGINES first and set full throttle!", 1.0, 0.0, 0.0);
+          }
+          if(getprop("/gear/launchbar/state") == "Engaged" and 
+            (getprop("/engines/engine[0]/running") and getprop("/engines/engine[1]/running")) and 
+            (getprop("/controls/engines/engine[0]/throttle") &lt; 0.7)){
+              screen.log.write("Please set full throttle!", 1.0, 0.0, 0.0);
+          }
+        </script>
+    </binding>
+    <binding>
+        <command>nasal</command>
+        <script>
+          if(getprop("/controls/special/catapult-carrier-crane/crane-is-free") and !getprop("/controls/special/catapult-carrier-crane/search-carrier")) {
+            setprop("/controls/gear/launchbar", 1);
+          }else{
+            screen.log.write("Not possible for the moment!", 1.0, 0.7, 0.0);
+          }
+        </script>
+    </binding>
+   </action>
+  </animation>
+
+  <!-- pick stan 2 so you fire up from the catapult -->
+  <animation>
+  <type>pick</type>
+   <object-name>stanPick2</object-name>
+   <visible>false</visible>
+   <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <interval-sec>0.2</interval-sec>
+    <binding>
+        <command>property-toggle</command>
+        <property>/controls/gear/catapult-launch-cmd</property>
+    </binding>
+    <mod-up>
+     <binding>
+        <command>property-toggle</command>
+        <property>/controls/gear/catapult-launch-cmd</property>
+     </binding>
+    </mod-up>
+   </action>
+  </animation>
+
+  <!-- Oliver Hardy helps with the catapult pushback to waiting position -->
+	<animation>
+		<type>translate</type>
+		<object-name>olli1</object-name>
+		<object-name>olli2</object-name>
+		<object-name>olli3</object-name>
+		<object-name>olli4</object-name>
+		<offset-m>24.95</offset-m>
+		<axis><x>24.358</x><y>-4.577</y><z>6.43</z></axis>
+	</animation>
+
+	<animation>
+		<type>billboard</type>
+		<object-name>olli1</object-name>
+		<object-name>olli2</object-name>
+		<object-name>olli3</object-name>
+		<object-name>olli4</object-name>
+	</animation>
+
+	<animation>
+		<type>dist-scale</type>
+		<object-name>olli1</object-name>
+		<object-name>olli2</object-name>
+		<object-name>olli3</object-name>
+		<object-name>olli4</object-name>
+    <interpolation>
+      <entry>
+        <ind>0</ind>
+        <dep>1</dep>
+      </entry>
+      <entry>
+        <ind>1500</ind>
+        <dep>3</dep>
+      </entry>
+      <entry>
+        <ind>10000</ind>
+        <dep>5</dep>
+      </entry>
+    </interpolation>
+	</animation>
+
+<!-- 
+  Oliver Hardy do his job
+  0 = no Olli is in view
+  1 = Oliver stand near the catapult launch
+  2 = Oliver stand near the catapult launch and show the way back
+  3 = Oliver stand at the waiting position
+  4 = Oliver stand at the waiting position and show the way to the cat 
+-->
+  <animation>
+    <type>select</type>
+		<object-name>olli1</object-name>
+		<object-name>olliPick1</object-name>	
+    <condition>
+      <and>
+        <not>
+          <property>/controls/special/catapult-carrier-crane/search-carrier</property>
+        </not>
+        <equals>
+          <property>/controls/special/pos-olli</property>
+          <value>1</value>
+        </equals>
+        <not-equals>
+          <property>/gear/launchbar/state</property>
+          <value type="string">Engaged</value>
+        </not-equals>
+      </and>
+    </condition>
+  </animation>
+
+  <animation>
+    <type>select</type>
+		<object-name>olli2</object-name>	
+    <condition>
+      <and>
+        <not>
+          <property>/controls/special/catapult-carrier-crane/search-carrier</property>
+        </not>
+        <equals>
+          <property>/controls/special/pos-olli</property>
+          <value>2</value>
+        </equals>
+        <not-equals>
+          <property>/gear/launchbar/state</property>
+          <value type="string">Engaged</value>
+        </not-equals>
+      </and>
+    </condition>
+  </animation>
+
+  <animation>
+    <type>select</type>
+		<object-name>olli3</object-name>
+		<object-name>olliPick3</object-name>		
+    <condition>
+      <not>
+        <property>/controls/special/catapult-carrier-crane/search-carrier</property>
+      </not>
+      <and>
+        <equals>
+          <property>/controls/special/pos-olli</property>
+          <value>3</value>
+        </equals>
+        <not-equals>
+          <property>/gear/launchbar/state</property>
+          <value type="string">Engaged</value>
+        </not-equals>
+      </and>
+    </condition>
+  </animation>
+
+  <animation>
+    <type>select</type>
+		<object-name>olli4</object-name>		
+    <condition>
+      <and>
+        <not>
+          <property>/controls/special/catapult-carrier-crane/search-carrier</property>
+        </not>
+        <equals>
+          <property>/controls/special/pos-olli</property>
+          <value>4</value>
+        </equals>
+        <not-equals>
+          <property>/gear/launchbar/state</property>
+          <value type="string">Engaged</value>
+        </not-equals>
+      </and>
+    </condition>
+  </animation>
+
+  <!-- pick olli 1 so you go back to waiting position -->
+  <animation>
+  <type>pick</type>
+   <object-name>olliPick1</object-name>
+   <visible>false</visible>
+   <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <interval-sec>0.2</interval-sec>
+    <binding>
+      <condition>
+        <greater-than>
+          <property>/position/altitude-ft</property>
+          <value>36.5</value>
+        </greater-than>
+        <less-than>
+          <property>/position/altitude-ft</property>
+          <value>38.5</value>
+        </less-than>
+       </condition>
+      <command>nasal</command>
+      <script>doj.olliOnWork()</script>
+    </binding>
+   </action>
+  </animation>
+
+  <!-- pick olli 3 so you go forward to catapult position -->
+  <animation>
+   <type>pick</type>
+	 <object-name>olliPick3</object-name>
+   <visible>false</visible>
+   <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <interval-sec>0.2</interval-sec>
+    <binding>      
+       <condition>
+        <greater-than>
+          <property>/position/altitude-ft</property>
+          <value>39.5</value>
+        </greater-than>
+        <less-than>
+          <property>/position/altitude-ft</property>
+          <value>42</value>
+        </less-than>
+       </condition>
+      <command>nasal</command>
+      <script>doj.olliOnWork()</script>
+    </binding>
+   </action>
+  </animation>
+
+  <!-- The Crane -->
+	<model>
+		<name>heaving-crane</name>
+		<path>Models/Geometry/DO_J_1934_Mail/crane.xml</path>
+		<offsets>
+			<x-m>-4.723</x-m>
+			<y-m> 2.012</y-m>
+			<z-m> 7.159</z-m>
+		</offsets>
+	</model>
+
+  <!-- the lights -->
+	<model>
+		<name>SchwabDeckLights</name>
+		<path>Models/Geometry/DO_J_1934_Mail/schwabenland-lights.xml</path>
+		<offsets>
+			<x-m>0</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+		</offsets>
+	</model>
+
+  <!-- Cargo on deck -->
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_1.xml</path>
+		<name>cargoPack1</name>
+		<offsets>
+			<x-m> 1.0</x-m>
+			<y-m> 2.5</y-m>
+			<z-m> 5.114</z-m>
+			<heading-deg>-90</heading-deg>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_2.xml</path>
+		<name>cargoPack2</name>
+		<offsets>
+			<x-m> 1.0</x-m>
+			<y-m>-2.0</y-m>
+			<z-m> 5.114</z-m>
+			<heading-deg>-270</heading-deg>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_3.xml</path>
+		<name>cargoPack3</name>
+		<offsets>
+			<x-m> 13.0</x-m>
+			<y-m> 2.5</y-m>
+			<z-m> 5.114</z-m>
+			<heading-deg>-270</heading-deg>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_4.xml</path>
+		<name>cargoPack4</name>
+		<offsets>
+			<x-m> 10.0</x-m>
+			<y-m> -2.0</y-m>
+			<z-m>  5.114</z-m>
+			<heading-deg>-90</heading-deg>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_5.xml</path>
+		<name>cargoPack5</name>
+		<offsets>
+			<x-m> 19.0</x-m>
+			<y-m> 2.5</y-m>
+			<z-m> 5.114</z-m>
+			<heading-deg>-270</heading-deg>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_6.xml</path>
+		<name>cargoPack6</name>
+		<offsets>
+			<x-m> 19.0</x-m>
+			<y-m> -2.0</y-m>
+			<z-m>  5.114</z-m>
+			<heading-deg>-90</heading-deg>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_7.xml</path>
+		<name>cargoPack7</name>
+		<offsets>
+			<x-m> 30.0</x-m>
+			<y-m> -0.024</y-m>
+			<z-m>  2.62</z-m>
+			<heading-deg>180</heading-deg>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_8.xml</path>
+		<name>cargoPack8</name>
+		<offsets>
+			<x-m> 34.0</x-m>
+			<y-m> -0.024</y-m>
+			<z-m> 2.62</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_9.xml</path>
+		<name>cargoPack9</name>
+		<offsets>
+			<x-m> 38.0</x-m>
+			<y-m> -0.024</y-m>
+			<z-m>  2.62</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_10.xml</path>
+		<name>cargoPack10</name>
+		<offsets>
+			<x-m> 42.0</x-m>
+			<y-m> -0.024</y-m>
+			<z-m>  2.62</z-m>
+			<heading-deg>180</heading-deg>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/cargoPack_11.xml</path>
+		<name>cargoPack11</name>
+		<offsets>
+			<x-m> 46.0</x-m>
+			<y-m>-0.024</y-m>
+			<z-m> 2.62</z-m>
+			<heading-deg>180</heading-deg>
+		</offsets>
+	</model>
+
+  <!-- effects -->
+	<model>
+		<name>chimneySmoke</name>
+		<path>Models/Geometry/DO_J_1934_Mail/Effects/chimney-smoke.xml</path>
+		<offsets>
+			<x-m>68.649</x-m>
+			<y-m>1.72</y-m>
+			<z-m>15.972</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/Effects/cat-smoke.xml</path>
+		<name>cat-steam-1</name>
+		<offsets>
+			<x-m>32.34</x-m>
+			<y-m>7.26</y-m>
+			<z-m>5.772</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Models/Geometry/DO_J_1934_Mail/Effects/cat-smoke.xml</path>
+		<name>cat-steam-2</name>
+		<offsets>
+			<x-m>-5.355</x-m>
+			<y-m>7.26</y-m>
+			<z-m>5.772</z-m>
+		</offsets>
+	</model>
+	<!-- *** LoD *** -->
+	<animation>
+		<type>range</type>
+		<max-m>200000</max-m>
+	</animation>
+</PropertyList>
